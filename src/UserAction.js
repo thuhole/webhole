@@ -825,6 +825,18 @@ export class PostForm extends Component {
   on_submit(event) {
     if (event) event.preventDefault();
     if (this.state.loading_status === 'loading') return;
+    if (this.state.text.includes('自杀')) {
+        const msg = [
+            '您提到了「自杀」\n',
+            '需要帮助？',
+            '北京24小时心理援助热线：010-8295-1332',
+            '希望24小时热线：400-161-9995',
+            '你不孤单，我们都在。\n',
+            '确认将继续发表'
+        ]
+        const result = confirm(msg.join('\n'))
+        if (result !== true) return
+    }
     if (this.img_ref.current.files.length) {
       this.setState({
         loading_status: 'processing',
