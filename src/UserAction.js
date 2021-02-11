@@ -6,7 +6,7 @@ import {
   BrowserWarningBar,
 } from './Common';
 import { MessageViewer } from './Message';
-import { LoginPopup } from './old_infrastructure/widgets';
+import { LoginPopup } from './login';
 import { ColorPicker } from './color_picker';
 import { ConfigUI } from './Config';
 import fixOrientation from 'fix-orientation';
