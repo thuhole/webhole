@@ -7,8 +7,8 @@ import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 
 import './login.css';
 
-import { THUHOLE_API_ROOT } from './infrastructure/const';
-import { get_json, API_VERSION_PARAM } from './infrastructure/functions';
+import { API_ROOT } from './old_infrastructure/const';
+import { get_json, API_VERSION_PARAM } from './old_infrastructure/functions';
 
 import {
     GoogleReCaptchaProvider,
@@ -92,7 +92,7 @@ class LoginPopupSelf extends Component {
       },
       () => {
         fetch(
-          THUHOLE_API_ROOT +
+          API_ROOT +
           'security/login/check_email?v=v1.2.3&device=0' +
           API_VERSION_PARAM(), {
           method: 'POST',
@@ -130,7 +130,7 @@ class LoginPopupSelf extends Component {
       },
       () => {
         fetch(
-          THUHOLE_API_ROOT +
+          API_ROOT +
           'security/login/login?v=v1.2.3&device=0' +
           API_VERSION_PARAM(),
           {
@@ -180,7 +180,7 @@ class LoginPopupSelf extends Component {
       },
       () => {
         fetch(
-          THUHOLE_API_ROOT +
+          API_ROOT +
           'security/login/create_account?v=v1.2.3&device=0' +
           API_VERSION_PARAM(),
           {
@@ -234,7 +234,7 @@ class LoginPopupSelf extends Component {
       },
       () => {
         fetch(
-          THUHOLE_API_ROOT +
+          API_ROOT +
           'security/login/create_account?v=v1.2.3&device=0' +
           API_VERSION_PARAM(),
           {
@@ -292,7 +292,7 @@ class LoginPopupSelf extends Component {
       },
       () => {
         fetch(
-          THUHOLE_API_ROOT +
+          API_ROOT +
           'security/login/send_code' +
           '?user=' +
           encodeURIComponent(this.ref.username.current.value) +
