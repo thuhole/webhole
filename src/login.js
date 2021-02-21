@@ -62,9 +62,13 @@ class LoginPopupSelf extends Component {
       alert('请同意条款与条件！');
       return 1;
     }
+    if (this.ref.password.current.value.length < 8) {
+      alert('密码太短，至少应包含8个字符！');
+      return 2;
+    }
     if (this.ref.password.current.value !== this.ref.password_confirm.current.value) {
       alert('密码不一致！');
-      return 2;
+      return 3;
     }
     return 0;
   }
@@ -86,6 +90,7 @@ class LoginPopupSelf extends Component {
   verify_email() {
     const old_token = new URL(location.href).searchParams.get('old_token');
     const email = encodeURIComponent(this.ref.username.current.value);
+    // VALIDATE EMAIL IN FRONT-END HERE
     this.setState(
       {
         loading_status: 'loading',
@@ -93,7 +98,7 @@ class LoginPopupSelf extends Component {
       () => {
         fetch(
           API_ROOT +
-          'security/login/check_email?v=v1.2.3&device=0' +
+          'security/login/check_email?' +
           API_VERSION_PARAM(), {
           method: 'POST',
           body: JSON.stringify({
@@ -105,7 +110,7 @@ class LoginPopupSelf extends Component {
           .then((res) => res.json())
           .then((json) => {
             // COMMENT NEXT LINE
-            //json.code = 1;
+            //json.code = 2;
             if (json.code < 0) throw new Error(json.msg);
             this.setState({
               loading_status: 'done',
@@ -131,7 +136,7 @@ class LoginPopupSelf extends Component {
       () => {
         fetch(
           API_ROOT +
-          'security/login/login?v=v1.2.3&device=0' +
+          'security/login/login?' +
           API_VERSION_PARAM(),
           {
             method: 'POST',
@@ -151,7 +156,7 @@ class LoginPopupSelf extends Component {
             }
 
             set_token(json.token);
-            alert(`登录成功`);
+            alert('登录成功');
             this.setState({
               loading_status: 'done',
             });
@@ -181,7 +186,7 @@ class LoginPopupSelf extends Component {
       () => {
         fetch(
           API_ROOT +
-          'security/login/create_account?v=v1.2.3&device=0' +
+          'security/login/create_account?' +
           API_VERSION_PARAM(),
           {
             method: 'POST',
@@ -191,7 +196,7 @@ class LoginPopupSelf extends Component {
             body: JSON.stringify({
               email,
               password_hashed,
-              device_typeL: 0,
+              device_type: 0,
               device_info: navigator.userAgent,
               valid_code
             }),
@@ -205,7 +210,7 @@ class LoginPopupSelf extends Component {
             }
 
             set_token(json.token);
-            alert(`登录成功`);
+            alert('登录成功');
             this.setState({
               loading_status: 'done',
             });
@@ -235,7 +240,7 @@ class LoginPopupSelf extends Component {
       () => {
         fetch(
           API_ROOT +
-          'security/login/create_account?v=v1.2.3&device=0' +
+          'security/login/create_account?' +
           API_VERSION_PARAM(),
           {
             method: 'POST',
@@ -245,7 +250,7 @@ class LoginPopupSelf extends Component {
             body: JSON.stringify({
               email,
               password_hashed,
-              device_typeL: 0,
+              device_type: 0,
               device_info: navigator.userAgent,
               old_token
             }),
@@ -259,7 +264,7 @@ class LoginPopupSelf extends Component {
             }
 
             set_token(json.token);
-            alert(`登录成功`);
+            alert('登录成功');
             this.setState({
               loading_status: 'done',
             });
@@ -370,18 +375,18 @@ class LoginPopupSelf extends Component {
                 <p>
                   <b>输入邮箱来登录 {process.env.REACT_APP_TITLE}</b>
                 </p>
-                <p>
-                  <label>
-                    邮箱&nbsp;
-                    <input
-                      ref={this.ref.username}
-                      type="email"
-                      autoFocus={true}
-                      defaultValue="example@example.com"
-                    />
-                  </label>
-                </p>
               </>)}
+            <p style={this.state.phase === -1 ? {} : { display: 'none' }}>
+              <label>
+                邮箱&nbsp;
+                <input
+                  ref={this.ref.username}
+                  type="email"
+                  autoFocus={true}
+                  defaultValue="@mails.tsinghua.edu.cn"
+                />
+              </label>
+            </p>
             {this.state.phase === 0 && (
               <>
                 <p>
