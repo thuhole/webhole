@@ -5,7 +5,6 @@ import TimeAgo from 'react-timeago';
 import chineseStrings from 'react-timeago/lib/language-strings/zh-CN';
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter';
 
-import './infrastructure/global.css';
 import './login.css';
 
 import { THUHOLE_API_ROOT } from './infrastructure/const';
@@ -97,16 +96,16 @@ class LoginPopupSelf extends Component {
           'security/login/check_email?v=v1.2.3&device=0' +
           API_VERSION_PARAM(), {
           method: 'POST',
-          body: {
+          body: JSON.stringify({
             email,
             old_token
-          },
+          }),
         },
         )
           .then((res) => res.json())
           .then((json) => {
             // COMMENT NEXT LINE
-            json.code = 1;
+            //json.code = 1;
             if (json.code < 0) throw new Error(json.msg);
             this.setState({
               loading_status: 'done',
@@ -114,8 +113,7 @@ class LoginPopupSelf extends Component {
             });
           })
           .catch((e) => {
-            // UNCOMMENT NEXT LINE
-            //alert('邮箱检验失败\n' + e);
+            alert('邮箱检验失败\n' + e);
             this.setState({
               loading_status: 'done',
             });
@@ -190,13 +188,13 @@ class LoginPopupSelf extends Component {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: {
+            body: JSON.stringify({
               email,
               password_hashed,
               device_typeL: 0,
               device_info: navigator.userAgent,
               valid_code
-            },
+            }),
           },
         )
           .then(get_json)
@@ -244,13 +242,13 @@ class LoginPopupSelf extends Component {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: {
+            body: JSON.stringify({
               email,
               password_hashed,
               device_typeL: 0,
               device_info: navigator.userAgent,
               old_token
-            },
+            }),
           },
         )
           .then(get_json)
@@ -365,8 +363,8 @@ class LoginPopupSelf extends Component {
           />
         )}
         <div>
-          <div className="thuhole-login-popup-shadow" />
-          <div className="thuhole-login-popup">
+          <div className="treehollow-login-popup-shadow" />
+          <div className="treehollow-login-popup">
             {this.state.phase === -1 && (
               <>
                 <p>
