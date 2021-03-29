@@ -714,7 +714,7 @@ class FlowSidebar extends PureComponent {
       this.state.filter_name && this.state.filter_name !== DZ_NAME ? null : (
         <ClickHandler
           callback={(e) => {
-            this.show_reply_bar('', e);
+            this.show_reply_bar(DZ_NAME, e);
           }}
         >
           <FlowItem
